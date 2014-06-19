@@ -1,8 +1,9 @@
 module Elodin
   class PullRequest
     class MessageValidator
-      def initialize(exit_status, contents)
-        @exit_status, @contents = exit_status, contents
+      attr_reader :exit_status, :message
+      def initialize(exit_status, message)
+        @exit_status, @message = exit_status, message
       end
 
       def valid?
