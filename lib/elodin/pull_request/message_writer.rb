@@ -10,6 +10,10 @@ module Elodin
         File.read(path)
       end
 
+      def message_contents
+        contents.split("\n").reject {|line| line.match(/^#/)}.join("\n")
+      end
+
       def path
         ensure_tempfile
         tempfile_path
@@ -24,11 +28,12 @@ module Elodin
       def generate_tempfile
         File.open(tempfile_path, "w") do |f|
           f << template_content
+          Elodin.logger.debug("Created file with template at #{tempfile_path}")
         end
       end
 
       def tempfile_path
-        "/tmp/#{GitBranch.current}-#{data[:target_sha]} pull request"
+        "/tmp/#{GitBranch.current}-#{data[:target_branch]} pull request"
       end
 
       def erb_data

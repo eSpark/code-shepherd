@@ -3,29 +3,15 @@ require 'spec_helper'
 module Elodin
   class PullRequest
     RSpec.describe MessageValidator do
-      let(:validator) { MessageValidator.new(exit_status, "stuff") }
+      let(:validator) { MessageValidator.new("stuff") }
 
       context "if it exits successfully" do
-        let(:exit_status) { 0 }
-
-        it "is valid" do
+        it "returns true" do
           expect(validator).to be_valid
         end
 
-        it "has no error" do
+        it "has no error message" do
           expect(validator.error).to be_nil
-        end
-      end
-
-      context "if it exits successfully" do
-        let(:exit_status) { 1 }
-
-        it "isn't valid" do
-          expect(validator).not_to be_valid
-        end
-
-        it "has an error message" do
-          expect(validator.error).not_to be_nil
         end
       end
     end

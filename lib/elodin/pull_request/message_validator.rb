@@ -1,17 +1,16 @@
 module Elodin
   class PullRequest
     class MessageValidator
-      attr_reader :exit_status, :message
-      def initialize(exit_status, message)
-        @exit_status, @message = exit_status, message
+      attr_reader :message
+      def initialize(message)
+        @message = message
       end
 
       def valid?
-        @exit_status == 0
+        true
       end
 
       def error
-        "The editor did not exit successfully!" unless valid?
       end
     end
   end

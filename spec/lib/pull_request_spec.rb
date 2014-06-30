@@ -4,9 +4,10 @@ module Elodin
   RSpec.describe PullRequest do
     let(:target_branch) { Faker::Lorem.word }
     let(:pr) { PullRequest.new(target_branch) }
+    let(:changes) { [double] }
 
     before :each do
-      allow(GitBranch).to receive(:changes).with(target_branch).and_return([1])
+      allow(GitBranch).to receive(:changes).with(target_branch).and_return(changes)
     end
 
     describe "#has_differences?" do
@@ -25,13 +26,16 @@ module Elodin
         let(:message) { double("Commit Message", path: Faker::Lorem.word) }
 
         before :each do
-          allow(pr).to receive(:has_differences?).and_return(true)
-          allow(PullRequest::CommitMessage).to receive(:acquire!).and_return(message)
+          allow_any_instance_of(PullRequest::CommitMessage).to receive(:acquire!) do |msg|
+            if msg.message_data == {differences: changes, target_branch: target_branch}
+              message
+            end
+          end
         end
 
-        it "executes the right command" do
+        skip "executes the right command" do
           expect_any_instance_of(Object).to receive(:`).with(
-            "hub pull-request #{target_branch} --file #{message.path}"
+            "hub pull-request -h #{target_branch} -F \"#{message.path}\" | pbcopy "
           )
           pr.open!
         end

@@ -6,3 +6,8 @@ require 'git'
 
 require 'elodin'
 
+RSpec.configure do |config|
+    config.before do
+      Elodin.logger.level = Logger::WARN
+    end
+end
