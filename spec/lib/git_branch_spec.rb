@@ -19,7 +19,10 @@ module Elodin
         expect(changes.length).to eq(canonical.size)
         canonical.each_with_index do |commit, index|
           expect(changes[index]).to include(commit.sha[0..6])
-          expect(changes[index]).to include(commit.message)
+          # some commits may have a multiline commits that the command line
+          # properly handles but the git gem includes completely -- we only
+          # want the first line
+          expect(changes[index]).to include(commit.message.split("\n").first)
         end
       end
 

@@ -22,7 +22,7 @@ module Elodin
 
     def pr_command
       # pbcopy copies to the clipboard for easy use
-      "hub pull-request -b #{target_branch} -h #{GitBranch.current} -F \"#{commit_message.path}\" | pbcopy "
+      "hub pull-request -b #{target_branch} -h #{GitBranch.current} -m \"#{contents_for_command_line}\" | pbcopy "
     end
 
     def differences
@@ -35,6 +35,10 @@ module Elodin
 
     def commit_data
       {differences: differences, target_branch: target_branch}
+    end
+
+    def contents_for_command_line
+      commit_message.message_contents.split("\n").join("\\n")
     end
   end
 end

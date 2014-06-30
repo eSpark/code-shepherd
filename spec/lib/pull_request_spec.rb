@@ -24,7 +24,10 @@ module Elodin
 
     describe "open!" do
       context "if there are differences" do
-        let(:message) { double("Commit Message", path: Faker::Lorem.word) }
+        let(:contents) { Faker::Lorem.words(6).join("\n") }
+        let(:message) {
+          double("Commit Message", path: Faker::Lorem.word, message_contents: contents)
+        }
 
         before :each do
           allow_any_instance_of(PullRequest::CommitMessage).to receive(:acquire!) do |msg|
@@ -34,9 +37,10 @@ module Elodin
           end
         end
 
-        skip "executes the right command" do
+        it "executes the right command" do
+          expected_message = contents.split("\n").join("\\n")
           expect_any_instance_of(Object).to receive(:`).with(
-            "hub pull-request -b #{target_branch} -h #{GitBranch.current} -F \"#{message.path}\" | pbcopy "
+            "hub pull-request -b #{target_branch} -h #{GitBranch.current} -m \"#{expected_message}\" | pbcopy "
           )
           pr.open!
         end
