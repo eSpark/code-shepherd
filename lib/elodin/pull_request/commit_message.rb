@@ -11,25 +11,29 @@ module Elodin
       end
 
       def acquire!
-        launch_editor!
-        editing_result = MessageValidator.new(exit_status, message)
-        if editing_result.valid?
-          message
+        if result = launch_editor!
+          editing_result = MessageValidator.new(message)
+          if editing_result.valid?
+            message
+          else
+            raise LocalWorkflowError.new(editing_result.error)
+          end
         else
-          raise LocalWorkflowError.new(editing_result.error)
+          raise LocalWorkflowError.new("The command #{editor_command} failed!")
         end
       end
 
       protected
 
       def launch_editor!
-        `"#{ENV["EDITOR"]}" "#{message.path}"`
+        system(editor_command).tap do |result|
+          Elodin.logger.debug("#{editor_command}: #{result}")
+        end
       end
 
-      def exit_status
-        $?.to_i
+      def editor_command
+        "\"#{ENV["EDITOR"]}\" \"#{message.path}\""
       end
     end
-
   end
 end

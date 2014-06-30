@@ -5,6 +5,7 @@ module Elodin
     RSpec.describe CommitMessage do
       let(:message_data) { {commits: [double], target_sha: "foo"} }
       let(:commit_message) { CommitMessage.new(**message_data) }
+      let(:editor_command) { "\"#{ENV["EDITOR"]}\" \"#{path}\"" }
 
       before :each do
         allow(GitBranch).to receive(:current).and_return(Faker::Lorem.word)
@@ -27,20 +28,18 @@ module Elodin
           allow(commit_message).to receive(:message).and_return(message)
 
           # you can't really stub $?
-          allow(commit_message).to receive(:exit_status).and_return(exit_status)
           allow_any_instance_of(MessageValidator).to receive(:valid?) do |validator|
-            expect(validator.exit_status).to eq(exit_status)
             expect(validator.message).to eq(message)
             validity
           end
           # don't actually launch the editor
-          allow_any_instance_of(Object).to receive(:`)
+          allow_any_instance_of(Object).to receive(:system).and_return(true)
         end
 
         it "launches the editor" do
           editor = ENV["EDITOR"]
           ENV["EDITOR"] = Faker::Lorem.word
-          allow_any_instance_of(Object).to receive(:`).with("\"#{ENV["EDITOR"]}\" \"#{path}\"")
+          expect_any_instance_of(Object).to receive(:system).with(editor_command).and_return(true)
           commit_message.acquire!
           ENV["EDITOR"] = editor
         end
@@ -51,18 +50,25 @@ module Elodin
           end
         end
 
-        context "if the result is invalid" do
-          let(:validity) { false }
+        context "if the process exits with problems" do
           let(:error) { Faker::Company.bs }
 
           before :each do
-            allow_any_instance_of(MessageValidator).to receive(:error).and_return(error)
+            allow_any_instance_of(Object).to receive(:system).and_return(false)
           end
 
           it "raises a LocalWorkflowError with the error" do
             expect { commit_message.acquire! }.to raise_exception(LocalWorkflowError) do |err|
-              expect(err.message).to eq(error)
+              expect(err.message).to include(editor_command)
             end
+          end
+        end
+
+        context "if the result is invalid" do
+          let(:validity) { false }
+
+          it "raises a LocalWorkflowError" do
+            expect { commit_message.acquire! }.to raise_exception(LocalWorkflowError)
           end
         end
       end
