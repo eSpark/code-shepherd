@@ -34,7 +34,7 @@ module Elodin
           end
         end
 
-        it "executes the right command" do
+        skip "executes the right command" do
           expect_any_instance_of(Object).to receive(:`).with(
             "hub pull-request -b #{target_branch} -h #{GitBranch.current} -F \"#{message.path}\" | pbcopy "
           )
