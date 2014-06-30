@@ -1,7 +1,7 @@
 require 'thor'
 require 'erb'
 require 'ostruct'
-require 'elodin'
+require File.join(File.dirname(__FILE__), 'lib/elodin')
 
 class Elodin < Thor
   desc "pr TARGET", "Open a pull request against the target branch (master by default)"
@@ -9,5 +9,3 @@ class Elodin < Thor
     PullRequest.new(target).open!
   end
 end
-
-
