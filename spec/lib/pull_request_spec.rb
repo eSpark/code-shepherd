@@ -38,9 +38,8 @@ module Elodin
         end
 
         it "executes the right command" do
-          expected_message = contents.split("\n").join("\\n")
           expect_any_instance_of(Object).to receive(:`).with(
-            "hub pull-request -b #{target_branch} -h #{GitBranch.current} -m \"#{expected_message}\" | pbcopy "
+            "hub pull-request -b #{target_branch} -h #{GitBranch.current} -m \"#{contents}\" | pbcopy "
           )
           pr.open!
         end

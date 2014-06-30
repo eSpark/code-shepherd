@@ -38,7 +38,7 @@ module Elodin
     end
 
     def contents_for_command_line
-      commit_message.message_contents.split("\n").join("\\n")
+      commit_message.message_contents
     end
   end
 end
