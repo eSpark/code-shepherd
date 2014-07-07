@@ -1,0 +1,13 @@
+require 'rspec'
+require 'faker'
+require 'securerandom'
+# we test the command line output against the Git library
+require 'git'
+
+require 'shepherd'
+
+RSpec.configure do |config|
+    config.before do
+      Shepherd.logger.level = Logger::WARN
+    end
+end
