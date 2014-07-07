@@ -1,10 +1,10 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'elodin/version'
+require 'shepherd/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "elodin"
-  spec.version       = Elodin::VERSION
+  spec.name          = "shepherd"
+  spec.version       = Shepherd::VERSION
   spec.authors       = ["Alex Koppel"]
   spec.email         = ["koppel@esparklearning.com"]
   spec.description   = %q{A fine Arcanist replacement}

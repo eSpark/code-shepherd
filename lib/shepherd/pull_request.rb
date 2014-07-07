@@ -1,4 +1,4 @@
-module Elodin
+module Shepherd
   class PullRequest
     attr_reader :target_branch
     def initialize(target_branch)
@@ -11,7 +11,7 @@ module Elodin
 
     def open!
       if has_differences?
-        Elodin.logger.debug("Executing #{pr_command}")
+        Shepherd.logger.debug("Executing #{pr_command}")
         `#{pr_command}`
       else
         raise LocalWorkflowError.new("The are no git differences between #{GitBranch.current} and #{target_branch}.")

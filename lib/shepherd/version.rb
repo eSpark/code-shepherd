@@ -1,3 +1,3 @@
-module Elodin
+module Shepherd
   VERSION = "0.0.1"
 end

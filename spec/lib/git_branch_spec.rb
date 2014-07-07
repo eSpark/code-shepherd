@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-module Elodin
+module Shepherd
   RSpec.describe GitBranch do
     def git
-      Git.open(Dir.pwd.gsub(/elodin.*/, "elodin"))
+      Git.open(Dir.pwd.gsub(/shepherd.*/, "shepherd"))
     end
 
     describe ".current" do

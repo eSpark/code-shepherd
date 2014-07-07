@@ -1,15 +1,15 @@
-module Elodin
+module Shepherd
   class GitBranch
     def self.current
       `#{branch_command}`.chomp.tap do |branch|
-        Elodin.logger.debug("#{branch_command}: #{branch}")
+        Shepherd.logger.debug("#{branch_command}: #{branch}")
       end
     end
 
     def self.changes(target_branch = "master")
       command = diff_command(target_branch)
       `#{command}`.chomp.split("\n").tap do |deltas|
-        Elodin.logger.debug("#{command}: \n\t#{deltas.join("\n\t")}")
+        Shepherd.logger.debug("#{command}: \n\t#{deltas.join("\n\t")}")
       end
     end
 

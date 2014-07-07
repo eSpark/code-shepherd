@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Elodin
+module Shepherd
   class PullRequest
     RSpec.describe MessageWriter do
       let(:target_branch) { Faker::Lorem.words(2).join("_") }

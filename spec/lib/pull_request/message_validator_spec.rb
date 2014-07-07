@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Elodin
+module Shepherd
   class PullRequest
     RSpec.describe MessageValidator do
       let(:validator) { MessageValidator.new("stuff") }

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Elodin
+module Shepherd
   class PullRequest
     RSpec.describe CommitMessage do
       let(:message_data) { {commits: [double], target_sha: "foo"} }

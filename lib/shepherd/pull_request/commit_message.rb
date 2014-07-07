@@ -1,4 +1,4 @@
-module Elodin
+module Shepherd
   class PullRequest
     class CommitMessage
       attr_reader :message_data
@@ -27,7 +27,7 @@ module Elodin
 
       def launch_editor!
         system(editor_command).tap do |result|
-          Elodin.logger.debug("#{editor_command}: #{result}")
+          Shepherd.logger.debug("#{editor_command}: #{result}")
         end
       end
 

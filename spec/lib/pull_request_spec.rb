@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Elodin
+module Shepherd
   RSpec.describe PullRequest do
     let(:target_branch) { Faker::Lorem.word }
     let(:pr) { PullRequest.new(target_branch) }

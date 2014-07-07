@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    elodin (0.0.1)
+    shepherd (0.0.1)
       thor
 
 GEM
@@ -38,8 +38,8 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.3)
   byebug
-  elodin!
   faker
   git
   rake
   rspec (~> 3.0.0)
+  shepherd!

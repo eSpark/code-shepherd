@@ -1,4 +1,4 @@
-module Elodin
+module Shepherd
   class PullRequest
     class MessageValidator
       attr_reader :message

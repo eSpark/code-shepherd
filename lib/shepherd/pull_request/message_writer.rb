@@ -1,4 +1,4 @@
-module Elodin
+module Shepherd
   class PullRequest
     class MessageWriter
       attr_reader :data
@@ -28,7 +28,7 @@ module Elodin
       def generate_tempfile
         File.open(tempfile_path, "w") do |f|
           f << template_content
-          Elodin.logger.debug("Created file with template at #{tempfile_path}")
+          Shepherd.logger.debug("Created file with template at #{tempfile_path}")
         end
       end
 
