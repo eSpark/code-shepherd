@@ -1,4 +1,4 @@
-arcanist-clone
+code-shepherd
 ==============
 
-A clone of arcanist wrapping Github.
+A tool to shepherd your code through review to production.
