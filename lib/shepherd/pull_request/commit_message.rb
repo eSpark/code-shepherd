@@ -11,7 +11,7 @@ module Shepherd
       end
 
       def acquire!
-        if result = launch_editor!
+        if launch_editor!
           editing_result = MessageValidator.new(message.contents)
           if editing_result.valid?
             message
