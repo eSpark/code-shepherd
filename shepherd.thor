@@ -1,6 +1,4 @@
 require 'thor'
-require 'erb'
-require 'ostruct'
 require 'shepherd'
 
 class Ard < Thor
