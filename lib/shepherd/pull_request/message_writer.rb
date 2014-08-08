@@ -1,3 +1,5 @@
+require 'ostruct'
+
 module Shepherd
   class PullRequest
     class MessageWriter
@@ -37,7 +39,10 @@ module Shepherd
       end
 
       def erb_data
-        data.merge(current_branch: GitBranch.current)
+        data.merge(
+          current_branch: GitBranch.current,
+          reviewers: Reviewers.available_reviewers
+        )
       end
 
       def template_content

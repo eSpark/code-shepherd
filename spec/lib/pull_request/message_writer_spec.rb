@@ -61,6 +61,9 @@ module Shepherd
           content = File.read(writer.path)
           expect(content).to include(current_branch)
           expect(content).to include(target_branch)
+          Reviewers.available_reviewers.each do |r|
+            expect(content).to include(r)
+          end
           differences.each do |c|
             expect(content).to include(c)
           end
