@@ -20,7 +20,7 @@ module Shepherd
 
       describe "#acquire!" do
         let(:path) { Faker::Lorem.word }
-        let(:message) { double("message", path: path) }
+        let(:message) { double("message", contents: "foo", path: path) }
         let(:exit_status) { rand }
         let(:validity) { true }
 
@@ -29,7 +29,7 @@ module Shepherd
 
           # you can't really stub $?
           allow_any_instance_of(MessageValidator).to receive(:valid?) do |validator|
-            expect(validator.message).to eq(message)
+            expect(validator.message).to eq(message.contents)
             validity
           end
           # don't actually launch the editor
@@ -51,7 +51,7 @@ module Shepherd
         end
 
         context "if the process exits with problems" do
-          let(:error) { Faker::Company.bs }
+          let(:erraor) { Faker::Company.bs }
 
           before :each do
             allow_any_instance_of(Object).to receive(:system).and_return(false)

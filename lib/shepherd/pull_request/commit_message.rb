@@ -11,12 +11,12 @@ module Shepherd
       end
 
       def acquire!
-        if result = launch_editor!
-          editing_result = MessageValidator.new(message)
+        if launch_editor!
+          editing_result = MessageValidator.new(message.contents)
           if editing_result.valid?
             message
           else
-            raise LocalWorkflowError.new(editing_result.error)
+            raise LocalWorkflowError.new(editing_result.errors)
           end
         else
           raise LocalWorkflowError.new("The command #{editor_command} failed!")

@@ -13,6 +13,7 @@ module Shepherd
       if has_differences?
         Shepherd.logger.debug("Executing #{pr_command}")
         `#{pr_command}`
+        puts "Your pull request has been opened! You can paste the link into Hipchat directly."
       else
         raise LocalWorkflowError.new("The are no git differences between #{GitBranch.current} and #{target_branch}.")
       end
