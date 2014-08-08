@@ -23,23 +23,23 @@ module Shepherd
 
     def pr_command
       # pbcopy copies to the clipboard for easy use
-      "hub pull-request -b #{target_branch} -h #{GitBranch.current} -m \"#{contents_for_command_line}\" | pbcopy "
+      "hub pull-request -b #{target_branch} -h #{GitBranch.current} -F \"#{message.path}\" | pbcopy "
     end
 
     def differences
       GitBranch.changes(target_branch)
     end
 
-    def commit_message
-      @commit_message ||= CommitMessage.new(commit_data).acquire!
+    def message
+      @message ||= CommitMessage.new(commit_data).acquire!
     end
 
     def commit_data
       {differences: differences, target_branch: target_branch}
     end
 
-    def contents_for_command_line
-      commit_message.message_contents
+    def commit_description_path
+      message.path
     end
   end
 end
