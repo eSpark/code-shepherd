@@ -3,7 +3,6 @@ require 'shepherd/pull_request'
 require 'shepherd/pull_request/commit_message'
 require 'shepherd/pull_request/message_writer'
 require 'shepherd/pull_request/message_validator'
-require 'shepherd/pull_request/reviewers'
 require 'logger'
 
 module Shepherd

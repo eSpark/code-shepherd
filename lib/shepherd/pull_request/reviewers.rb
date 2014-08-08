@@ -28,7 +28,7 @@ module Shepherd
         ]
       end
 
-      def self.reviewers_from_text(text)
+      def self.extract_from_text(text)
         new(text.scan(/(?:\@([a-z_]+) #{SIGNIFIER})+/).flatten)
       end
 
