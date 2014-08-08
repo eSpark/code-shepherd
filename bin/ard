@@ -1,5 +1,8 @@
+#!/usr/bin/env ruby
+#
 require 'bundler/setup'
 Bundler.require
+require 'thor'
 
 class Ard < Thor
   desc "pr TARGET", "Open a pull request against the target branch (master by default)"
@@ -7,3 +10,5 @@ class Ard < Thor
     Shepherd::PullRequest.new(target).open!
   end
 end
+
+Ard.start
