@@ -2,6 +2,9 @@ module Shepherd
   class PullRequest
     class Reviewers
       REQUIRED_REVIEWER_COUNT = 2
+      # how we identify that a reference to a reviewer and not a miscellaneous
+      # reference to someone.
+      SIGNIFIER = "plz"
 
       def self.available_reviewers
         # hard-coded for now, we'll read from a file shortly
@@ -23,6 +26,10 @@ module Shepherd
           "alicelocatelli",
           "khsia"
         ]
+      end
+
+      def self.reviewers_from_text(text)
+        new(text.scan(/(?:\@([a-z_]+) #{SIGNIFIER})+/).flatten)
       end
 
       attr_reader :reviewers

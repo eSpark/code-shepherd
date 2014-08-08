@@ -5,6 +5,14 @@ module Shepherd
     RSpec.describe Reviewers do
       let(:available) { Reviewers.available_reviewers }
 
+      describe ".reviewers_from_text" do
+        it "extracts the reviewers from some text" do
+          text = "Reviewers:\n\n@abc plz\n@def plz"
+          reviewers = Reviewers.reviewers_from_text(text)
+          expect(reviewers.reviewers).to eq(["abc", "def"])
+        end
+      end
+
       describe "#valid?" do
         it "returns false if there are < 2 reviewers" do
           expect(Reviewers.new([available.first])).not_to be_valid
