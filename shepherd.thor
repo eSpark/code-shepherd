@@ -1,5 +1,5 @@
-require 'thor'
-require 'shepherd'
+require 'bundler/setup'
+Bundler.require
 
 class Ard < Thor
   desc "pr TARGET", "Open a pull request against the target branch (master by default)"
