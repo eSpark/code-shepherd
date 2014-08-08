@@ -25,11 +25,7 @@ module Shepherd
       protected
 
       def ensure_tempfile
-        generate_tempfile unless file_present?
-      end
-
-      def file_present?
-        File.exists?(tempfile_path) && !File.read(tempfile_path).empty?
+        generate_tempfile unless File.exists?(tempfile_path)
       end
 
       def generate_tempfile
